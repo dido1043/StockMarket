@@ -10,4 +10,6 @@ public interface CompanyService {
 
     public CompanyDto postCompany(CompanyDto companyDto);
 
+    public CompanyDto editCompany(Long id, CompanyDto companyDto);
+
 }

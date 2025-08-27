@@ -5,10 +5,7 @@ import com.example.model.entity.Company;
 import com.example.service.interfaces.CompanyService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -39,4 +36,10 @@ public class CompanyResource {
         return Response.ok(service.postCompany(companyDTO)).build();
     }
 
+    @PUT
+    @Path("/edit/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response editCompany(@PathParam("id") Long id, @Valid CompanyDto companyDTO) {
+        return Response.ok(service.editCompany(id, companyDTO)).build();
+    }
 }

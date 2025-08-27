@@ -29,6 +29,23 @@ public class CompanyServiceImpl implements CompanyService {
         return convertToCompanyDto(company);
     }
 
+    @Override
+    @Transactional
+    public CompanyDto editCompany(Long id, CompanyDto companyDto) {
+        Company company = Company.findById(id);
+        if (company == null){
+            throw new IllegalArgumentException("Invalid company");
+        }
+        company.name = companyDto.name;
+        company.country = companyDto.country;
+        company.symbol = companyDto.symbol;
+        company.website = companyDto.website;
+        company.email = companyDto.email;
+
+        company.persist();
+        return convertToCompanyDto(company);
+    }
+
     private Company convertToCompany(CompanyDto companyDto){
         Company company = new Company();
         company.name = companyDto.name;
