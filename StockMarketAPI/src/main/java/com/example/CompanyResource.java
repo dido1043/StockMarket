@@ -21,7 +21,7 @@ public class CompanyResource {
     }
 
     @GET
-    @Path("/all")
+
     @Produces(MediaType.APPLICATION_JSON)
     public Response allCompanies() {
         List<Company> companies = Company.listAll();
@@ -30,14 +30,14 @@ public class CompanyResource {
     }
 
     @POST
-    @Path("/add")
+
     @Produces(MediaType.APPLICATION_JSON)
     public Response postCompany(@Valid CompanyDto companyDTO) {
         return Response.ok(service.postCompany(companyDTO)).build();
     }
 
     @PUT
-    @Path("/edit/{id}")
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response editCompany(@PathParam("id") Long id, @Valid CompanyDto companyDTO) {
         return Response.ok(service.editCompany(id, companyDTO)).build();
