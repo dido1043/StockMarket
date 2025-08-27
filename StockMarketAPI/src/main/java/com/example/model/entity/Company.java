@@ -19,7 +19,7 @@ public class Company extends PanacheEntity {
     public String website;
     @Column(nullable = false, name = "email")
     public String email;
-    @Column(nullable = false, name = "created_at")
+    @Column(name = "created_at")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     public LocalDate createdAt;
 

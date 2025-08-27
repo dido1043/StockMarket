@@ -1,9 +1,12 @@
 package com.example;
 
+import com.example.model.dto.CompanyDto;
 import com.example.model.entity.Company;
 import com.example.service.interfaces.CompanyService;
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
@@ -28,4 +31,12 @@ public class CompanyResource {
         return Response.ok(companies).build();
 
     }
+
+    @POST
+    @Path("/add")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response postCompany(@Valid CompanyDto companyDTO) {
+        return Response.ok(service.postCompany(companyDTO)).build();
+    }
+
 }
