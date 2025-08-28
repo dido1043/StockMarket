@@ -21,7 +21,6 @@ public class CompanyResource {
     }
 
     @GET
-
     @Produces(MediaType.APPLICATION_JSON)
     public Response allCompanies() {
         List<Company> companies = Company.listAll();
@@ -30,7 +29,6 @@ public class CompanyResource {
     }
 
     @POST
-
     @Produces(MediaType.APPLICATION_JSON)
     public Response postCompany(@Valid CompanyDto companyDTO) {
         return Response.ok(service.postCompany(companyDTO)).build();

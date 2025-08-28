@@ -4,21 +4,32 @@ import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.NotBlank;
 
 
 @Entity
 @Table(name = "company")
 public class Company extends PanacheEntity {
     @Column(nullable = false, name = "company_name")
+    @NotBlank(message = "Company name cannot be empty")
     public String name;
-    @Column(nullable = false, name = "country")
+
+    @Column(nullable = false, name = "country", length = 2)
+    @NotBlank(message = "Country cannot be empty")
     public String country;
+
     @Column(nullable = false, name = "symbol")
+    @NotBlank(message = "Symbol cannot be empty")
     public String symbol;
+
     @Column(nullable = false, name = "website")
+    @NotBlank(message = "Website cannot be empty")
     public String website;
+
     @Column(nullable = false, name = "email")
+    @NotBlank(message = "Email cannot be empty")
     public String email;
+
     @Column(name = "created_at")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     public LocalDate createdAt;
