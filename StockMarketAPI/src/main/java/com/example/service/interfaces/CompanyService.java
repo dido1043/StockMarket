@@ -1,7 +1,6 @@
 package com.example.service.interfaces;
 
 import com.example.model.dto.CompanyDto;
-import com.example.model.entity.Company;
 
 import java.util.List;
 

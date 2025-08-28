@@ -36,34 +36,35 @@ public class CompanyServiceImpl implements CompanyService {
         if (company == null){
             throw new IllegalArgumentException("Invalid company");
         }
-        company.name = companyDto.name;
-        company.country = companyDto.country;
-        company.symbol = companyDto.symbol;
-        company.website = companyDto.website;
-        company.email = companyDto.email;
+        company.setName(companyDto.getName());
+        company.setCountry(companyDto.getCountry());
+        company.setSymbol(companyDto.getSymbol());
+        company.setWebsite(companyDto.getWebsite());
+        company.setEmail(companyDto.getEmail());
 
         company.persist();
         return convertToCompanyDto(company);
     }
 
-    private Company convertToCompany(CompanyDto companyDto){
+    private Company convertToCompany(CompanyDto companyDto) {
         Company company = new Company();
-        company.name = companyDto.name;
-        company.country = companyDto.country;
-        company.symbol = companyDto.symbol;
-        company.website = companyDto.website;
-        company.email = companyDto.email;
-        company.createdAt = LocalDate.now();
+        company.setName(companyDto.getName());
+        company.setCountry(companyDto.getCountry());
+        company.setSymbol(companyDto.getSymbol());
+        company.setWebsite(companyDto.getWebsite());
+        company.setEmail(companyDto.getEmail());
+        company.setCreatedAt(LocalDate.now());
         return company;
     }
-    private CompanyDto convertToCompanyDto(Company company){
+
+    private CompanyDto convertToCompanyDto(Company company) {
         CompanyDto companyDto = new CompanyDto();
-        companyDto.name = company.name;
-        companyDto.country = company.country;
-        companyDto.symbol = company.symbol;
-        companyDto.website = company.website;
-        companyDto.email = company.email;
-        companyDto.createdAt = LocalDate.now();
+        companyDto.setName(company.getName());
+        companyDto.setCountry(company.getCountry());
+        companyDto.setSymbol(company.getSymbol());
+        companyDto.setWebsite(company.getWebsite());
+        companyDto.setEmail(company.getEmail());
+        companyDto.setCreatedAt(LocalDate.now());
         return companyDto;
     }
 }

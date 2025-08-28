@@ -12,27 +12,27 @@ import jakarta.validation.constraints.NotBlank;
 public class Company extends PanacheEntity {
     @Column(nullable = false, name = "company_name")
     @NotBlank(message = "Company name cannot be empty")
-    public String name;
+    private String name;
 
     @Column(nullable = false, name = "country", length = 2)
     @NotBlank(message = "Country cannot be empty")
-    public String country;
+    private String country;
 
     @Column(nullable = false, name = "symbol")
     @NotBlank(message = "Symbol cannot be empty")
-    public String symbol;
+    private String symbol;
 
     @Column(nullable = false, name = "website")
     @NotBlank(message = "Website cannot be empty")
-    public String website;
+    private String website;
 
     @Column(nullable = false, name = "email")
     @NotBlank(message = "Email cannot be empty")
-    public String email;
+    private String email;
 
     @Column(name = "created_at")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
-    public LocalDate createdAt;
+    private LocalDate createdAt;
 
 
     public String getName() {

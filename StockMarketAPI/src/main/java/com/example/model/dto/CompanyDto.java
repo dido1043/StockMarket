@@ -1,17 +1,15 @@
 package com.example.model.dto;
 
-import jakarta.persistence.Column;
-
 import java.time.LocalDate;
 
 public class CompanyDto {
 
-    public String name;
-    public String country;
-    public String symbol;
-    public String website;
-    public String email;
-    public LocalDate createdAt;
+    private String name;
+    private String country;
+    private String symbol;
+    private String website;
+    private String email;
+    private LocalDate createdAt;
 
     public String getName() {
         return name;
