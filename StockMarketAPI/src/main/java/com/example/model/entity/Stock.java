@@ -8,10 +8,10 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "stock")
-public class Stock  extends PanacheEntity {
+public class Stock extends PanacheEntity {
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "company", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_id", nullable = false)
     private Company company;
     @Column(name = "market_capitalization", precision = 20, scale = 2, nullable = false)
     private BigDecimal marketCapitalization;

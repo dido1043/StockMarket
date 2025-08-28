@@ -10,6 +10,7 @@ public class StockDto {
     private Long companyId;
     private BigDecimal marketCapitalization;
     private BigDecimal shareOutstanding;
+    private LocalDateTime createdAt;
 
     public Long getCompanyId() {
         return companyId;
@@ -33,5 +34,13 @@ public class StockDto {
 
     public void setShareOutstanding(BigDecimal shareOutstanding) {
         this.shareOutstanding = shareOutstanding;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }

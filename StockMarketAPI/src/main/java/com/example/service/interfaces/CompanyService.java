@@ -1,14 +1,17 @@
 package com.example.service.interfaces;
 
 import com.example.model.dto.CompanyDto;
+import com.example.model.entity.Company;
 
 import java.util.List;
 
 public interface CompanyService {
-    public List<CompanyDto> getAllCompanies();
 
-    public CompanyDto postCompany(CompanyDto companyDto);
+     List<CompanyDto> getAllCompanies();
 
-    public CompanyDto editCompany(Long id, CompanyDto companyDto);
+     CompanyDto postCompany(CompanyDto companyDto);
 
+     CompanyDto editCompany(Long id, CompanyDto companyDto);
+
+     Company getCompany(Long id);
 }

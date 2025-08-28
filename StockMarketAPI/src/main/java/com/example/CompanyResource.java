@@ -27,7 +27,11 @@ public class CompanyResource {
         return Response.ok(companies).build();
 
     }
-
+//    @GET
+//    @Path("/get/{id}")
+//    public Response getCompany(@PathParam("id") Long id){
+//        return Response.ok(service.getCompany(id)).build();
+//    }
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response postCompany(@Valid CompanyDto companyDTO) {

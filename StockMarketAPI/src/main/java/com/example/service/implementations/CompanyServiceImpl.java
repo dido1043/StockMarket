@@ -12,6 +12,12 @@ import java.util.List;
 @ApplicationScoped
 public class CompanyServiceImpl implements CompanyService {
     @Override
+    public Company getCompany(Long id) {
+        Company company = Company.findById(id);
+        return company;
+    }
+
+    @Override
     public List<CompanyDto> getAllCompanies() {
         List<Company> companies = Company.listAll();
         return companies.stream().map(this::convertToCompanyDto).toList();
