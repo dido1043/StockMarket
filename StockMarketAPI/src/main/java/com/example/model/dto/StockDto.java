@@ -7,16 +7,16 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class StockDto {
-    private Company company;
+    private Long companyId;
     private BigDecimal marketCapitalization;
     private BigDecimal shareOutstanding;
 
-    public Company getCompany() {
-        return company;
+    public Long getCompanyId() {
+        return companyId;
     }
 
-    public void setCompany(Company company) {
-        this.company = company;
+    public void setCompanyId(Long companyId) {
+        this.companyId = companyId;
     }
 
     public BigDecimal getMarketCapitalization() {
