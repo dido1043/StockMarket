@@ -16,7 +16,6 @@ public class CompanyDto {
     @Size(max = 2, min = 2)
     private String country;
     @NotNull
-
     private String symbol;
 
     private String website;

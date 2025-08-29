@@ -1,7 +1,6 @@
 package com.example.rest_client;
 
 import com.example.rest_client.interfaces.FinnhubService;
-import io.smallrye.config.WithName;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;

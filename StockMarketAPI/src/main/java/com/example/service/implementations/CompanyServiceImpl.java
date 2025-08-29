@@ -5,6 +5,7 @@ import com.example.model.entity.Company;
 import com.example.service.interfaces.CompanyService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -29,7 +30,7 @@ public class CompanyServiceImpl implements CompanyService {
     public CompanyDto postCompany(CompanyDto companyDto) {
         Company company = convertToCompany(companyDto);
         if (company == null){
-            throw new IllegalArgumentException("Invalid company");
+            throw new NotFoundException("Invalid company");
         }
         company.persist();
 
@@ -41,7 +42,7 @@ public class CompanyServiceImpl implements CompanyService {
     public CompanyDto editCompany(Long id, CompanyDto companyDto) {
         Company company = Company.findById(id);
         if (company == null){
-            throw new IllegalArgumentException("Invalid company");
+            throw new NotFoundException("Invalid company");
         }
         company.setName(companyDto.getName());
         company.setCountry(companyDto.getCountry());

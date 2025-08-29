@@ -9,6 +9,7 @@ import com.example.service.interfaces.StockService;
 import jakarta.enterprise.context.*;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.core.Response;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -34,18 +35,21 @@ public class StockServiceImpl implements StockService {
     public StockDto getStock(Long companyId) {
         Company company = companyService.getCompany(companyId);
         if (company == null){
-            throw new IllegalArgumentException("Invalid company");
+            throw new NotFoundException("Invalid company");
         }
         String symbol = company.getSymbol();
 
-        Response response = finnhubResource.getStockData(symbol);
-        Object stockData = response.readEntity(Object.class);
 
-        StockDto stockDto = mapToDto(stockData, company);
-
+        StockDto stockDto = null;
         Stock existing = Stock.find("company = ?1 order by createdAt desc", company).firstResult();
         if (existing == null || !isSavedToday(existing)) {
+            Response response = finnhubResource.getStockData(symbol);
+            Object stockData = response.readEntity(Object.class);
+
+            stockDto = mapToDto(stockData, company);
             saveToDb(stockDto, company);
+        }else{
+            stockDto = mapToDtoForExisting(existing, company);
         }
 
         return stockDto;
@@ -64,6 +68,21 @@ public class StockServiceImpl implements StockService {
 
     private boolean isSavedToday(Stock stock){
         return stock.getCreatedAt().toLocalDate().equals(LocalDateTime.now().toLocalDate());
+    }
+    private StockDto mapToDtoForExisting(Stock existing, Company company) {
+        StockDto stockDto = new StockDto();
+
+        stockDto.setName(company.getName());
+        stockDto.setCountry(company.getCountry());
+        stockDto.setSymbol(company.getSymbol());
+        stockDto.setWebsite(company.getWebsite());
+        stockDto.setEmail(company.getEmail());
+        stockDto.setCompanyId(company.id.longValue());
+        stockDto.setMarketCapitalization(existing.getMarketCapitalization());
+        stockDto.setShareOutstanding(existing.getShareOutstanding());
+        stockDto.setCreatedAt(existing.getCreatedAt());
+
+        return stockDto;
     }
 
     private StockDto mapToDto(Object stockData, Company company) {

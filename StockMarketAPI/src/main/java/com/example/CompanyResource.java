@@ -39,6 +39,9 @@ public class CompanyResource {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response editCompany(@PathParam("id") Long id, @Valid CompanyDto companyDTO) {
+        if (id == null || companyDTO == null){
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
         return Response.status(Response.Status.OK)
                 .entity(service.editCompany(id, companyDTO))
                 .build();
