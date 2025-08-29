@@ -11,6 +11,9 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.core.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -22,7 +25,7 @@ public class StockServiceImpl implements StockService {
 
     private final CompanyService companyService;
     private final FinnhubResource finnhubResource;
-
+    private final Logger logger = LoggerFactory.getLogger(StockServiceImpl.class);
 
     @Inject
     public StockServiceImpl(CompanyService companyService, FinnhubResource finnhubResource) {
@@ -43,12 +46,14 @@ public class StockServiceImpl implements StockService {
         StockDto stockDto = null;
         Stock existing = Stock.find("company = ?1 order by createdAt desc", company).firstResult();
         if (existing == null || !isSavedToday(existing)) {
+            logger.info("Fetching stock data for {}", symbol);
             Response response = finnhubResource.getStockData(symbol);
             Object stockData = response.readEntity(Object.class);
 
             stockDto = mapToDto(stockData, company);
             saveToDb(stockDto, company);
         }else{
+            logger.info("Using existing stock data for {}", symbol);
             stockDto = mapToDtoForExisting(existing, company);
         }
 
