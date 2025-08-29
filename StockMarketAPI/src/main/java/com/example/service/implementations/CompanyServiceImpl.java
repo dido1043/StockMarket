@@ -7,6 +7,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @ApplicationScoped
@@ -59,12 +60,13 @@ public class CompanyServiceImpl implements CompanyService {
         company.setSymbol(companyDto.getSymbol());
         company.setWebsite(companyDto.getWebsite());
         company.setEmail(companyDto.getEmail());
-        company.setCreatedAt(LocalDate.now());
+        company.setCreatedAt(LocalDateTime.now());
         return company;
     }
 
     private CompanyDto convertToCompanyDto(Company company) {
         CompanyDto companyDto = new CompanyDto();
+        companyDto.setId(company.id.longValue());
         companyDto.setName(company.getName());
         companyDto.setCountry(company.getCountry());
         companyDto.setSymbol(company.getSymbol());

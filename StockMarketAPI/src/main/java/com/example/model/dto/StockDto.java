@@ -1,16 +1,22 @@
 package com.example.model.dto;
 
-import com.example.model.entity.Company;
-import jakarta.persistence.Column;
-
+import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class StockDto {
+
+    @NotNull(message = "Company ID cannot be null")
     private Long companyId;
+
+    @NotNull(message = "Market capitalization cannot be null")
     private BigDecimal marketCapitalization;
+
+    @NotNull(message = "Share outstanding cannot be null")
     private BigDecimal shareOutstanding;
+
     private LocalDateTime createdAt;
+
 
     private String name;
     private String country;

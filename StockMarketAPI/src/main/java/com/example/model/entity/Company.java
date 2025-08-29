@@ -3,6 +3,8 @@ package com.example.model.entity;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 
@@ -22,17 +24,15 @@ public class Company extends PanacheEntity {
     @NotBlank(message = "Symbol cannot be empty")
     private String symbol;
 
-    @Column(nullable = false, name = "website")
-    @NotBlank(message = "Website cannot be empty")
+    @Column(name = "website")
     private String website;
 
-    @Column(nullable = false, name = "email")
-    @NotBlank(message = "Email cannot be empty")
+    @Column(name = "email")
     private String email;
 
     @Column(name = "created_at")
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
-    private LocalDate createdAt;
+    @JsonFormat(pattern = "yyyy-MM-dd'")
+    private LocalDateTime createdAt;
 
 
     public String getName() {
@@ -75,11 +75,11 @@ public class Company extends PanacheEntity {
         this.email = email;
     }
 
-    public LocalDate getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDate createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 }

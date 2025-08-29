@@ -52,6 +52,7 @@ public class StockServiceImpl implements StockService {
         if (existing == null || !isSavedToday(existing)) {
             saveToDb(stockDto, company);
         }
+
         return stockDto;
     }
 
@@ -64,8 +65,6 @@ public class StockServiceImpl implements StockService {
         stock.setCreatedAt(stockDto.getCreatedAt());
 
         stock.persist();
-
-
     }
 
     private boolean isSavedToday(Stock stock){

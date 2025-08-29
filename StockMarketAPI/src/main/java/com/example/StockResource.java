@@ -18,6 +18,8 @@ public class StockResource {
     @GET
     @Path("/get/{id}")
     public Response getStock(@PathParam("id") Long id){
-        return Response.ok(stockService.getStock(id)).build();
+        return Response.status(Response.Status.OK)
+                .entity(stockService.getStock(id))
+                .build();
     }
 }

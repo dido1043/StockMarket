@@ -1,15 +1,36 @@
 package com.example.model.dto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import jakarta.validation.constraints.*;
+import org.hibernate.validator.constraints.URL;
 
 public class CompanyDto {
 
+
+    private Long id;
+    @NotNull
     private String name;
+    @NotNull
+    @Size(max = 2, min = 2)
     private String country;
+    @NotNull
+
     private String symbol;
+
     private String website;
     private String email;
-    private LocalDate createdAt;
+
+    private LocalDateTime createdAt;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -51,11 +72,11 @@ public class CompanyDto {
         this.email = email;
     }
 
-    public LocalDate getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDate createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 }
