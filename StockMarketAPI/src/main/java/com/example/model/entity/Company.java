@@ -31,7 +31,7 @@ public class Company extends PanacheEntity {
     private String email;
 
     @Column(name = "created_at")
-    @JsonFormat(pattern = "yyyy-MM-dd'")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'" , timezone = "UTC")
     private LocalDateTime createdAt;
 
 

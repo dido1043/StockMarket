@@ -1,5 +1,6 @@
 package com.example.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.*;
 
@@ -18,6 +19,7 @@ public class Stock extends PanacheEntity {
     @Column(name = "share_outstanding", precision = 20, scale = 2, nullable = false)
     private BigDecimal shareOutstanding;
     @Column(name = "created_at", nullable = false, updatable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'" , timezone = "UTC")
     private LocalDateTime createdAt = LocalDateTime.now();
 
     public Company getCompany() {
