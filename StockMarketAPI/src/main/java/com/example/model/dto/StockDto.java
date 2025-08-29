@@ -12,6 +12,12 @@ public class StockDto {
     private BigDecimal shareOutstanding;
     private LocalDateTime createdAt;
 
+    private String name;
+    private String country;
+    private String symbol;
+    private String website;
+    private String email;
+
     public Long getCompanyId() {
         return companyId;
     }
@@ -42,5 +48,45 @@ public class StockDto {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

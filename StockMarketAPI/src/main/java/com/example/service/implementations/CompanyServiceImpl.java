@@ -70,7 +70,7 @@ public class CompanyServiceImpl implements CompanyService {
         companyDto.setSymbol(company.getSymbol());
         companyDto.setWebsite(company.getWebsite());
         companyDto.setEmail(company.getEmail());
-        companyDto.setCreatedAt(LocalDate.now());
+        companyDto.setCreatedAt(company.getCreatedAt());
         return companyDto;
     }
 }

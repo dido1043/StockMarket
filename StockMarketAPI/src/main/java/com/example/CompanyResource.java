@@ -23,8 +23,8 @@ public class CompanyResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response allCompanies() {
-        List<Company> companies = Company.listAll();
-        return Response.ok(companies).build();
+
+        return Response.ok(service.getAllCompanies()).build();
 
     }
 //    @GET
