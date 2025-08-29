@@ -6,6 +6,5 @@ import com.example.model.entity.Stock;
 import java.util.List;
 
 public interface StockService {
-    Stock getStock(String symbol);
     StockDto getStock(Long companyId);
 }

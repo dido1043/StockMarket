@@ -30,11 +30,6 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public Stock getStock(String symbol) {
-        return Stock.find(symbol).firstResult();
-    }
-
-    @Override
     @Transactional
     public StockDto getStock(Long companyId) {
         Company company = companyService.getCompany(companyId);
