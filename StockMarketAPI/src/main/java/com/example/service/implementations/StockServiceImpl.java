@@ -21,8 +21,6 @@ import java.util.Map;
 
 @ApplicationScoped
 public class StockServiceImpl implements StockService {
-
-
     private final CompanyService companyService;
     private final FinnhubResource finnhubResource;
     private final Logger logger = LoggerFactory.getLogger(StockServiceImpl.class);
