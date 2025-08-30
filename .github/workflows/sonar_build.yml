@@ -48,4 +48,4 @@ jobs:
             -Dsonar.sources=src/main
             -Dsonar.tests=src/test
             -Dsonar.java.binaries=build/classes,build/classes/java/main
-            # no coverage path since tests are skipped
+
