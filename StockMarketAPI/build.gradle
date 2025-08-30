@@ -1,8 +1,14 @@
 plugins {
     id 'java'
     id 'io.quarkus'
+    id "org.sonarqube" version "6.3.1.5724"
 }
-
+sonar {
+    properties {
+        property "sonar.projectKey", "dido1043_StockMarket"
+        property "sonar.organization", "dido1043"
+    }
+}
 repositories {
     mavenCentral()
     mavenLocal()
