@@ -2,15 +2,19 @@ name: Build
 
 on:
   push:
-    branches: [ "**" ]
+    branches: ["**"]
   pull_request:
+
+permissions:
+  contents: read
 
 jobs:
   build:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: StockMarketAPI 
+        working-directory: StockMarketAPI
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -22,5 +26,13 @@ jobs:
           java-version: '21'
           cache: gradle
 
-      - name: Build with Gradle
-        run: ./gradlew build -x test --no-daemon
+      # Make the wrapper runnable on Linux even if committed from Windows
+      - name: Prepare Gradle wrapper
+        run: |
+          test -f gradlew || { echo "gradlew missing in StockMarketAPI/"; exit 1; }
+          sed -i 's/\r$//' gradlew
+          chmod +x gradlew || true
+          bash -n gradlew || true   # quick syntax check
+
+      - name: Build
+        run: bash ./gradlew build -x test --no-daemon
