@@ -28,8 +28,25 @@ dependencies {
     implementation 'io.quarkus:quarkus-smallrye-openapi'
     implementation 'io.quarkus:quarkus-config-yaml'
     implementation("io.quarkus:quarkus-rest-client-jackson")
-    testImplementation 'io.quarkus:quarkus-junit5'
-    testImplementation 'io.rest-assured:rest-assured'
+
+    // Quarkus test runner
+    testImplementation "io.quarkus:quarkus-junit5"
+
+    // HTTP testing
+    testImplementation "io.rest-assured:rest-assured:5.4.0"
+
+    // Assertions
+    testImplementation "org.assertj:assertj-core:3.25.3"
+
+    // Mockito
+    testImplementation "org.mockito:mockito-core:5.11.0"
+    testImplementation "org.mockito:mockito-junit-jupiter:5.11.0"
+    // (No need for quarkus-junit5-mockito; we'll use QuarkusMock programmatically)
+
+    // WireMock (for Finnhub tests)
+    testImplementation "com.github.tomakehurst:wiremock-jre8:2.35.0"
+
+
 }
 
 group = 'com.example'
@@ -41,8 +58,32 @@ java {
 }
 
 test {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
     systemProperty "java.util.logging.manager", "org.jboss.logmanager.LogManager"
+    jacoco {
+        includes = ['com.example.*']
+    }
 }
+
+jacoco {
+    toolVersion = '0.8.12'
+}
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true   // Sonar needs XML
+        html.required = true
+    }
+}
+
+sonarqube {
+    properties {
+        property "sonar.java.coveragePlugin", "jacoco"
+        property "sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml"
+    }
+}
+
 compileJava {
     options.encoding = 'UTF-8'
     options.compilerArgs << '-parameters'
