@@ -83,7 +83,7 @@ public class StockServiceImpl implements StockService {
         stockDto.setSymbol(company.getSymbol());
         stockDto.setWebsite(company.getWebsite());
         stockDto.setEmail(company.getEmail());
-        stockDto.setCompanyId(company.getId().longValue());
+        stockDto.setCompanyId(company.getId());
         stockDto.setMarketCapitalization(existing.getMarketCapitalization());
         stockDto.setShareOutstanding(existing.getShareOutstanding());
         stockDto.setCreatedAt(existing.getCreatedAt());
@@ -100,7 +100,7 @@ public class StockServiceImpl implements StockService {
         stockDto.setSymbol(company.getSymbol());
         stockDto.setWebsite(company.getWebsite());
         stockDto.setEmail(company.getEmail());
-        stockDto.setCompanyId(company.getId().longValue());
+        stockDto.setCompanyId(company.getId());
         stockDto.setMarketCapitalization(new BigDecimal(stockMap.get("marketCapitalization").toString()));
         stockDto.setShareOutstanding(new BigDecimal(stockMap.get("shareOutstanding").toString()));
         stockDto.setCreatedAt(LocalDateTime.now());
