@@ -63,11 +63,9 @@ class StockServiceImplUnitTest {
 
     @Test
     void getStock_buildsDto_likeSample_whenNoExisting() {
-        // Given: company exists; no cached Stock for today
         when(companyService.getCompany(9L)).thenReturn(amd);
         when(stockRepository.findFirstByCompanyOrderByCreatedAtDesc(amd)).thenReturn(null);
 
-        // Finnhub payload your service expects (keys must match)
         Map<String, Object> finnhubPayload = Map.of(
                 "marketCapitalization", "263923.08192960377",
                 "shareOutstanding",     "1622.84"
@@ -76,14 +74,11 @@ class StockServiceImplUnitTest {
         when(finnhubResp.readEntity(Object.class)).thenReturn(finnhubPayload);
         when(finnhubResource.getStockData("AMD")).thenReturn(finnhubResp);
 
-        // Capture persisted Stock (save(..) likely void)
         ArgumentCaptor<Stock> saved = ArgumentCaptor.forClass(Stock.class);
         doAnswer(inv -> null).when(stockRepository).save(saved.capture());
 
-        // When
         StockDto out = service.getStock(9L);
 
-        // Then: DTO matches sample
         assertThat(out.getCompanyId()).isEqualTo(9L);
         assertThat(out.getCountry()).isEqualTo("US");
         assertThat(out.getEmail()).isEqualTo("investor.relations@amd.com");
@@ -98,7 +93,6 @@ class StockServiceImplUnitTest {
                 .isNotNull()
                 .isCloseTo(LocalDateTime.now(), within(5, ChronoUnit.SECONDS));
 
-        // And it persisted exactly what it returned
         verify(finnhubResource).getStockData("AMD");
         verify(stockRepository).save(any(Stock.class));
         Stock persisted = saved.getValue();

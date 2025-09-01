@@ -1,7 +1,6 @@
 package com.tests.service;
 
 import com.example.rest_client.interfaces.FinnhubService;
-//import com.example.test.FinnhubWireMockResource;
 import com.tests.resourse.finnhub.FinnhubWireMockResource;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
@@ -42,7 +41,6 @@ class FinnhubServiceIT {
             finnhubService.getStockProfile("ERR", "dummy");
             fail("Expected MP REST client to throw for non-2xx, or return a type that signals error");
         } catch (Exception e) {
-            // Resteasy Reactive MP client usually throws WebApplicationException/ClientWebApplicationException
             assertThat(e.getClass().getName())
                     .contains("WebApplicationException");
         }
