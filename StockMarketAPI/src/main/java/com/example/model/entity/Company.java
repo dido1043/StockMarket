@@ -1,8 +1,6 @@
 package com.example.model.entity;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -11,7 +9,12 @@ import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "company")
-public class Company extends PanacheEntity {
+public class Company{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Column(nullable = false, name = "company_name")
     @NotBlank(message = "Company name cannot be empty")
     private String name;
@@ -34,6 +37,13 @@ public class Company extends PanacheEntity {
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'" , timezone = "UTC")
     private LocalDateTime createdAt;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

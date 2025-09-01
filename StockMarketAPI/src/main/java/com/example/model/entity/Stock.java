@@ -9,7 +9,10 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "stock")
-public class Stock extends PanacheEntity {
+public class Stock{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id", nullable = false)
@@ -21,6 +24,14 @@ public class Stock extends PanacheEntity {
     @Column(name = "created_at", nullable = false, updatable = false)
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'" , timezone = "UTC")
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Company getCompany() {
         return company;

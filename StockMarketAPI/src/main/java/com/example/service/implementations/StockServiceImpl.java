@@ -3,6 +3,7 @@ package com.example.service.implementations;
 import com.example.model.dto.StockDto;
 import com.example.model.entity.Company;
 import com.example.model.entity.Stock;
+import com.example.repository.StockRepository;
 import com.example.rest_client.FinnhubResource;
 import com.example.service.interfaces.CompanyService;
 import com.example.service.interfaces.StockService;
@@ -23,12 +24,14 @@ import java.util.Map;
 public class StockServiceImpl implements StockService {
     private final CompanyService companyService;
     private final FinnhubResource finnhubResource;
+    private final StockRepository stockRepository;
     private final Logger logger = LoggerFactory.getLogger(StockServiceImpl.class);
 
     @Inject
-    public StockServiceImpl(CompanyService companyService, FinnhubResource finnhubResource) {
+    public StockServiceImpl(CompanyService companyService, FinnhubResource finnhubResource, StockRepository stockRepository) {
         this.companyService = companyService;
         this.finnhubResource = finnhubResource;
+        this.stockRepository = stockRepository;
     }
 
     @Override
@@ -42,7 +45,7 @@ public class StockServiceImpl implements StockService {
 
 
         StockDto stockDto = null;
-        Stock existing = Stock.find("company = ?1 order by createdAt desc", company).firstResult();
+        Stock existing = stockRepository.findFirstByCompanyOrderByCreatedAtDesc(company);
         if (existing == null || !isSavedToday(existing)) {
             logger.info("Fetching stock data for {}", symbol);
             Response response = finnhubResource.getStockData(symbol);
@@ -66,7 +69,7 @@ public class StockServiceImpl implements StockService {
         stock.setShareOutstanding(stockDto.getShareOutstanding());
         stock.setCreatedAt(stockDto.getCreatedAt());
 
-        stock.persist();
+        stockRepository.save(stock);
     }
 
     private boolean isSavedToday(Stock stock){
@@ -80,7 +83,7 @@ public class StockServiceImpl implements StockService {
         stockDto.setSymbol(company.getSymbol());
         stockDto.setWebsite(company.getWebsite());
         stockDto.setEmail(company.getEmail());
-        stockDto.setCompanyId(company.id.longValue());
+        stockDto.setCompanyId(company.getId().longValue());
         stockDto.setMarketCapitalization(existing.getMarketCapitalization());
         stockDto.setShareOutstanding(existing.getShareOutstanding());
         stockDto.setCreatedAt(existing.getCreatedAt());
@@ -97,7 +100,7 @@ public class StockServiceImpl implements StockService {
         stockDto.setSymbol(company.getSymbol());
         stockDto.setWebsite(company.getWebsite());
         stockDto.setEmail(company.getEmail());
-        stockDto.setCompanyId(company.id.longValue());
+        stockDto.setCompanyId(company.getId().longValue());
         stockDto.setMarketCapitalization(new BigDecimal(stockMap.get("marketCapitalization").toString()));
         stockDto.setShareOutstanding(new BigDecimal(stockMap.get("shareOutstanding").toString()));
         stockDto.setCreatedAt(LocalDateTime.now());
