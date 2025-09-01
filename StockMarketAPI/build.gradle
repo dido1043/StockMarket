@@ -79,11 +79,12 @@ jacocoTestReport {
 
 sonarqube {
     properties {
-        property "sonar.java.coveragePlugin", "jacoco"
+        property "sonar.projectKey", "dido1043_StockMarket"
+        property "sonar.organization", "dido1043"
+        property "sonar.host.url", "https://sonarcloud.io"
         property "sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml"
     }
 }
-
 compileJava {
     options.encoding = 'UTF-8'
     options.compilerArgs << '-parameters'
