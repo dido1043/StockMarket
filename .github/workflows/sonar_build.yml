@@ -2,22 +2,31 @@ name: SonarCloud
 
 on:
   push:
-    branches: [ "**" ]
+    branches: ["**"]
   pull_request:
-    branches: [ "**" ]
+    branches: ["**"]
+
+permissions:
+  contents: read
+  pull-requests: write
 
 jobs:
   test-and-analyze:
     runs-on: ubuntu-latest
 
-    # DB for tests (no Testcontainers required)
+    # If your test properties use ${DB_URL}/${DB_USER}/${DB_PASSWORD}, set them here:
+    env:
+      DB_URL: jdbc:postgresql://localhost:5432/stock_market_db
+      DB_USER: postgres
+      DB_PASSWORD: dido12
+
     services:
       postgres:
         image: postgres:16-alpine
         env:
-         POSTGRES_USER: postgres
-         POSTGRES_PASSWORD: dido12
-         POSTGRES_DB: stock_market_db
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: dido12
+          POSTGRES_DB: stock_market_db
         ports:
           - 5432:5432
         options: >-
@@ -28,18 +37,17 @@ jobs:
 
     steps:
       - name: Checkout
-      - uses: actions/checkout@v4
+        uses: actions/checkout@v4
 
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '21'
+          java-version: "21"
 
       - name: Setup Gradle (cache)
         uses: gradle/actions/setup-gradle@v4
         with:
-          # Use the subproject as build root
           build-root-directory: StockMarketAPI
 
       - name: Make wrapper executable
@@ -58,8 +66,6 @@ jobs:
         working-directory: StockMarketAPI
         run: ./gradlew --no-daemon clean test jacocoTestReport -i
 
-      # --- SonarCloud (optional) ---
-      # Add repo secrets: SONAR_TOKEN, SONAR_ORG. Replace <your_project_key>.
       - name: SonarCloud analysis
         if: ${{ secrets.SONAR_TOKEN != '' }}
         working-directory: StockMarketAPI
