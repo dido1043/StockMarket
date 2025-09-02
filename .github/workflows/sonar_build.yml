@@ -1,4 +1,4 @@
-name: Build
+name: SonarCloud
 
 on:
   push:
@@ -65,11 +65,12 @@ jobs:
         working-directory: StockMarketAPI
         run: ./gradlew --no-daemon clean test jacocoTestReport -i
 
+      # Map secret -> env, then condition on env to avoid the "secrets" context error
       - name: SonarCloud analysis (optional)
-        if: ${{ secrets.SONAR_TOKEN != '' }}
         working-directory: StockMarketAPI
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        if: ${{ env.SONAR_TOKEN != '' }}
         run: |
           ./gradlew --no-daemon sonarqube \
             -Dsonar.host.url=https://sonarcloud.io \
