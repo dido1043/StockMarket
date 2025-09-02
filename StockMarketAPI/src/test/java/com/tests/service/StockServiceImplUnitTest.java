@@ -25,20 +25,7 @@ import static org.assertj.core.api.Assertions.within;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-/**
- * Verifies StockServiceImpl builds a DTO like:
- * {
- *   "companyId": 9,
- *   "country": "US",
- *   "createdAt": "...",
- *   "email": "investor.relations@amd.com",
- *   "marketCapitalization": 263923.08192960377,
- *   "name": "Advanced Micro Devices, Inc.",
- *   "shareOutstanding": 1622.84,
- *   "symbol": "AMD",
- *   "website": "https://www.amd.com"
- * }
- */
+
 @ExtendWith(MockitoExtension.class)
 class StockServiceImplUnitTest {
 
@@ -62,7 +49,7 @@ class StockServiceImplUnitTest {
     }
 
     @Test
-    void getStock_buildsDto_likeSample_whenNoExisting() {
+    void getStock_buildsDto() {
         when(companyService.getCompany(9L)).thenReturn(amd);
         when(stockRepository.findFirstByCompanyOrderByCreatedAtDesc(amd)).thenReturn(null);
 
