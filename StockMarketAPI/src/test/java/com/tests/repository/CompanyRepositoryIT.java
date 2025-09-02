@@ -24,7 +24,7 @@ public class CompanyRepositoryIT {
         company.setEmail("investor.relations@amd.com");
         Company saved = companyRepository.save(company);
 
-        Assertions.assertThat(saved.getId() != null);
+        Assertions.assertThat(saved.getId()).isNotNull();
         Assertions.assertThat(saved.getName()).isEqualTo(company.getName());
         Assertions.assertThat(saved.getCountry()).isEqualTo(company.getCountry());
         Assertions.assertThat(saved.getSymbol()).isEqualTo(company.getSymbol());
