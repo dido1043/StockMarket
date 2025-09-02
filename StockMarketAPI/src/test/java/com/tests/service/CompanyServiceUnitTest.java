@@ -13,6 +13,9 @@ import com.example.model.dto.CompanyDto;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import static org.assertj.core.api.Assertions.within;
+
+import java.util.List;
+
 import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
@@ -23,6 +26,7 @@ class CompanyServiceUnitTest {
 
     @InjectMocks
     CompanyServiceImpl service;
+
 
     @Test
     void postCompany_returnsDtoLikeSample() {
@@ -72,5 +76,35 @@ class CompanyServiceUnitTest {
         assertThat(persisted.getCreatedAt())
                 .isNotNull()
                 .isCloseTo(LocalDateTime.now(), within(5, ChronoUnit.SECONDS));
+    }
+    @Test
+    void getAllCompanies_returnsDtoLikeSample() {
+        Company company = new Company();
+       // company.setId(9L);
+        company.setName("Advanced Micro Devices, Inc.");
+        company.setCountry("US");
+        company.setSymbol("AMD");
+        company.setWebsite("https://www.amd.com");
+        company.setEmail("investor.relations@amd.com");
+        company.setCreatedAt(LocalDateTime.now());
+
+        when(companyRepository.findAll()).thenReturn(java.util.List.of(company));
+
+        List<CompanyDto> result = service.getAllCompanies();
+
+        assertThat(result).hasSize(1);
+        CompanyDto dto = result.get(0);
+        //assertThat(dto.getId()).isEqualTo(9L);
+        assertThat(dto.getName()).isEqualTo("Advanced Micro Devices, Inc.");
+        assertThat(dto.getCountry()).isEqualTo("US");
+        assertThat(dto.getSymbol()).isEqualTo("AMD");
+        assertThat(dto.getWebsite()).isEqualTo("https://www.amd.com");
+        assertThat(dto.getEmail()).isEqualTo("investor.relations@amd.com");
+        assertThat(dto.getCreatedAt())
+                .isNotNull()
+                .isCloseTo(LocalDateTime.now(), within(5, ChronoUnit.SECONDS));
+
+        verify(companyRepository).findAll();
+        verifyNoMoreInteractions(companyRepository);
     }
 }
