@@ -15,7 +15,7 @@ public class FinnhubWireMockResource implements QuarkusTestResourceLifecycleMana
         wm = new WireMockServer(8089);
         wm.start();
 
-        // Success: AMD
+
         wm.stubFor(get(urlPathEqualTo("/stock/profile2"))
                 .withQueryParam("symbol", equalTo("AMD"))
                 .withQueryParam("token", matching(".*"))
@@ -32,7 +32,7 @@ public class FinnhubWireMockResource implements QuarkusTestResourceLifecycleMana
         """)
                         .withStatus(200)));
 
-// Error: ERR
+
         wm.stubFor(get(urlPathEqualTo("/stock/profile2"))
                 .withQueryParam("symbol", equalTo("ERR"))
                 .withQueryParam("token", matching(".*"))

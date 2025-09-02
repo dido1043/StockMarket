@@ -32,8 +32,8 @@ jobs:
           sed -i 's/\r$//' gradlew
           chmod +x gradlew || true
 
-      - name: Build (skip tests)
-        run: bash ./gradlew clean build -x test --no-daemon
+      - name: Run tests with coverage
+        run: bash ./gradlew clean test jacocoTestReport --no-daemon
 
       - name: SonarCloud scan
         uses: SonarSource/sonarqube-scan-action@v5.3.1
