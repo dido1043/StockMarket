@@ -6,6 +6,7 @@ import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import jakarta.transaction.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -28,6 +29,7 @@ public class CompanyRepositoryIT {
     }
 
     @Test
+    @Transactional
     void saveAndRetrieveCompany() {
         repository.save(amd);
         assertThat(amd.getId()).isNotNull();
