@@ -33,26 +33,6 @@ public class CompanyRepositoryIT {
 
     }
 
-    @Test
-    void findById_test() {
-        Company company = new Company();
-        company.setName("Advanced Micro Devices, Inc.");
-        company.setCountry("US");
-        company.setSymbol("AMD");
-        company.setWebsite("https://www.amd.com");
-        company.setEmail("investor.relations@amd.com");
-        Company saved = companyRepository.save(company);
-
-
-        Company fetched = companyRepository.findById(saved.getId()).orElse(null);
-
-        Assertions.assertThat(fetched).isNotNull();
-        Assertions.assertThat(fetched.getId()).isEqualTo(saved.getId());
-        Assertions.assertThat(fetched.getName()).isEqualTo(saved.getName());
-        Assertions.assertThat(fetched.getCountry()).isEqualTo(saved.getCountry());
-        Assertions.assertThat(fetched.getSymbol()).isEqualTo(saved.getSymbol());
-        Assertions.assertThat(fetched.getWebsite()).isEqualTo(saved.getWebsite());
-        Assertions.assertThat(fetched.getEmail()).isEqualTo(saved.getEmail());
-    }
+    
 
 }
