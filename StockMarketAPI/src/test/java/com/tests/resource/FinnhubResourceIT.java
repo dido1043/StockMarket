@@ -4,11 +4,14 @@ import io.quarkus.test.common.QuarkusTestResource;
 import io.restassured.RestAssured;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
+
 @QuarkusTest
+@EnabledIfEnvironmentVariable(named = "FINNHUB_TOKEN", matches = ".+")
 class FinnhubResourceIT {
 
     @Test
@@ -19,16 +22,24 @@ class FinnhubResourceIT {
                 .get("/api/stock")
                 .then()
                 .statusCode(200)
-                .body(notNullValue());
+                .contentType("application/json")
+                // Finnhub may append exchange suffixes; be tolerant
+                .body("ticker", anyOf(equalTo("AAPL"), startsWith("AAPL")));
     }
 
     @Test
-    void getStockData_invalidSymbol_returnsNotFound() {
+    void getStockData_invalidSymbol_returnsEmptyOrError() {
         given()
                 .queryParam("symbol", "INVALID")
                 .when()
                 .get("/api/stock")
                 .then()
-                .statusCode(200);
+                // Finnhub usually returns 200 {} for unknown symbols; some accounts may get error payloads
+                .statusCode(anyOf(is(200), is(400), is(404)))
+                .body("$", anyOf(
+                        anEmptyMap(),            // {}
+                        not(hasKey("ticker")),   // 200 with no ticker
+                        hasKey("error")          // 4xx with error message
+                ));
     }
 }
