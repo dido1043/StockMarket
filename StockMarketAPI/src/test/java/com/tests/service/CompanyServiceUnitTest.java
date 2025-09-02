@@ -150,7 +150,7 @@ class CompanyServiceUnitTest {
     @Test
     void getAllCompanies_returnsDtoLikeSample() {
         Company company = new Company();
-       // company.setId(9L);
+
         company.setName("Advanced Micro Devices, Inc.");
         company.setCountry("US");
         company.setSymbol("AMD");
@@ -164,7 +164,7 @@ class CompanyServiceUnitTest {
 
         assertThat(result).hasSize(1);
         CompanyDto dto = result.get(0);
-        //assertThat(dto.getId()).isEqualTo(9L);
+
         assertThat(dto.getName()).isEqualTo("Advanced Micro Devices, Inc.");
         assertThat(dto.getCountry()).isEqualTo("US");
         assertThat(dto.getSymbol()).isEqualTo("AMD");

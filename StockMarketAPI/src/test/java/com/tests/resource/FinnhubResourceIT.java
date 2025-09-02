@@ -23,7 +23,6 @@ class FinnhubResourceIT {
                 .then()
                 .statusCode(200)
                 .contentType("application/json")
-                // Finnhub may append exchange suffixes; be tolerant
                 .body("ticker", anyOf(equalTo("AAPL"), startsWith("AAPL")));
     }
 
@@ -34,12 +33,11 @@ class FinnhubResourceIT {
                 .when()
                 .get("/api/stock")
                 .then()
-                // Finnhub usually returns 200 {} for unknown symbols; some accounts may get error payloads
                 .statusCode(anyOf(is(200), is(400), is(404)))
                 .body("$", anyOf(
-                        anEmptyMap(),            // {}
-                        not(hasKey("ticker")),   // 200 with no ticker
-                        hasKey("error")          // 4xx with error message
+                        anEmptyMap(),
+                        not(hasKey("ticker")),
+                        hasKey("error")
                 ));
     }
 }
