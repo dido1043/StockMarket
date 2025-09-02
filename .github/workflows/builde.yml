@@ -1,4 +1,4 @@
-name: SonarCloud
+name: Build
 
 on:
   push:
@@ -11,10 +11,9 @@ permissions:
   pull-requests: write
 
 jobs:
-  test-and-analyze:
+  build:
     runs-on: ubuntu-latest
 
-    # If your test properties use ${DB_URL}/${DB_USER}/${DB_PASSWORD}, set them here:
     env:
       DB_URL: jdbc:postgresql://localhost:5432/stock_market_db
       DB_USER: postgres
@@ -54,7 +53,7 @@ jobs:
         working-directory: StockMarketAPI
         run: chmod +x ./gradlew
 
-      - name: Wait for Postgres port
+      - name: Wait for Postgres
         run: |
           for i in {1..30}; do
             (echo > /dev/tcp/127.0.0.1/5432) >/dev/null 2>&1 && break
@@ -66,7 +65,7 @@ jobs:
         working-directory: StockMarketAPI
         run: ./gradlew --no-daemon clean test jacocoTestReport -i
 
-      - name: SonarCloud analysis
+      - name: SonarCloud analysis (optional)
         if: ${{ secrets.SONAR_TOKEN != '' }}
         working-directory: StockMarketAPI
         env:
