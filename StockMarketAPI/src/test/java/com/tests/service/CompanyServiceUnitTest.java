@@ -30,7 +30,7 @@ class CompanyServiceUnitTest {
     CompanyServiceImpl service;
 
     @Test
-    void editCompany_updatesAndReturnsDtoLikeSample() {
+    void editCompany_Test() {
         Company existingCompany = new Company();
         existingCompany.setName("Old Name");
         existingCompany.setCountry("Old Country");
@@ -70,7 +70,7 @@ class CompanyServiceUnitTest {
     }
 
     @Test
-    void getCompany_returnsDtoLikeSample() {
+    void getCompany_Test() {
         Company company = new Company();
         company.setId(9L);
         company.setName("Advanced Micro Devices, Inc.");
@@ -99,7 +99,7 @@ class CompanyServiceUnitTest {
     }
 
     @Test
-    void postCompany_returnsDtoLikeSample() {
+    void postCompany_Test() {
         CompanyDto input = new CompanyDto();
         input.setName("Advanced Micro Devices, Inc.");
         input.setCountry("US");
@@ -148,7 +148,7 @@ class CompanyServiceUnitTest {
                 .isCloseTo(LocalDateTime.now(), within(5, ChronoUnit.SECONDS));
     }
     @Test
-    void getAllCompanies_returnsDtoLikeSample() {
+    void getAllCompanies_Test() {
         Company company = new Company();
 
         company.setName("Advanced Micro Devices, Inc.");
